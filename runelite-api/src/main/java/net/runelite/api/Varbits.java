@@ -192,7 +192,13 @@ public enum Varbits
 	/**
 	 * Raids
 	 */
-	IN_RAID(5432, 1431, 31, 31);
+	IN_RAID(5432, 1431, 31, 31),
+
+	/**
+	 * Tithe Farm
+	 */
+	TITHE_FARM_SACK_AMOUNT(4900, 1329, 13, 19),
+	TITHE_FARM_SACK_ICON(5370, 1329, 11, 12);
 
 	/**
 	 * varbit id
