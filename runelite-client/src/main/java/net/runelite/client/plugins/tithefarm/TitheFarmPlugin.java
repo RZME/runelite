@@ -39,6 +39,8 @@ import net.runelite.client.ui.overlay.Overlay;
 
 import javax.inject.Inject;
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,7 +55,13 @@ public class TitheFarmPlugin extends Plugin
 	private TitheFarmPluginConfig config;
 
 	@Inject
-	private TitheFarmOverlay titheFarmOverlay;
+	private TitheFarmPlantOverlay titheFarmOverlay;
+
+	@Inject
+	private TitheFarmSackOverlay titheFarmSackOverlay;
+
+	@Inject
+	private TitheFarmInventoryOverlay titheFarmInventoryOverlay;
 
 	@Getter
 	private final Set<TitheFarmPlant> plants = new HashSet<>();
@@ -71,7 +79,7 @@ public class TitheFarmPlugin extends Plugin
 	}
 
 	@Override
-	public Overlay getOverlay() {return titheFarmOverlay;}
+	public Collection<Overlay> getOverlays(){return Arrays.asList(titheFarmOverlay, titheFarmSackOverlay, titheFarmInventoryOverlay);}
 
 	@Subscribe
 	public void onGameObjectsChanged(GameObjectsChanged event)

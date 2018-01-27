@@ -35,7 +35,7 @@ import javax.inject.Inject;
 import java.awt.*;
 import java.awt.geom.Arc2D;
 
-public class TitheFarmOverlay extends Overlay
+public class TitheFarmPlantOverlay extends Overlay
 {
 	private static final int TIMER_SIZE = 25;
 	private static final int TIMER_BORDER_WIDTH = 1;
@@ -49,7 +49,7 @@ public class TitheFarmOverlay extends Overlay
 	private Color colorGrown;
 
 	@Inject
-	TitheFarmOverlay(@Nullable Client client, TitheFarmPlugin plugin, TitheFarmPluginConfig config)
+	TitheFarmPlantOverlay(@Nullable Client client, TitheFarmPlugin plugin, TitheFarmPluginConfig config)
 	{
 		setPosition(OverlayPosition.DYNAMIC);
 		setLayer(OverlayLayer.UNDER_WIDGETS);
