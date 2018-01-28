@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameObject;
 import net.runelite.api.Point;
 import net.runelite.api.events.ConfigChanged;
-import net.runelite.api.events.GameObjectsChanged;
+import net.runelite.api.events.GameObjectSpawned;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -66,9 +66,6 @@ public class TitheFarmPlugin extends Plugin
 	@Getter
 	private final Set<TitheFarmPlant> plants = new HashSet<>();
 
-	@Getter
-	private Instant lastActionTime = Instant.ofEpochMilli(0);
-
 	@Provides
 	TitheFarmPluginConfig getConfig(ConfigManager configManager)
 	{
@@ -88,7 +85,7 @@ public class TitheFarmPlugin extends Plugin
 	}
 
 	@Subscribe
-	public void onGameObjectsChanged(GameObjectsChanged event)
+	public void onGameObjectSpawned(GameObjectSpawned event)
 	{
 		if (!config.enabled())
 		{

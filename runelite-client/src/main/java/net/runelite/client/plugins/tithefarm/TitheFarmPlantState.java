@@ -32,15 +32,15 @@ public enum TitheFarmPlantState
 	GROWN;
 
 	public static TitheFarmPlantState getState(int objectId)
-    {
+	{
 		if (TitheFarmPlantType.getPlantType(objectId) == null)
 		{
-		    return null;
+			return null;
 		}
 		int baseId = TitheFarmPlantType.getPlantType(objectId).getBaseId();
 		if (objectId == baseId)
 		{
-		    return GROWN;
+			return GROWN;
 		}
 		switch ((baseId - objectId) % 3)
 		{

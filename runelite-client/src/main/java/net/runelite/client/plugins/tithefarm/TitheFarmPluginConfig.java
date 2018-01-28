@@ -38,10 +38,10 @@ import java.awt.*;
 public interface TitheFarmPluginConfig extends Config
 {
 	@ConfigItem(
-			position = 0,
-			keyName = "enabled",
-			name = "Enabled",
-			description = "Configures whether or not the Tithe Farm plugin is enabled"
+		position = 0,
+		keyName = "enabled",
+		name = "Enabled",
+		description = "Configures whether or not the Tithe Farm plugin is enabled"
 	)
 	default boolean enabled()
 	{
@@ -49,10 +49,10 @@ public interface TitheFarmPluginConfig extends Config
 	}
 
 	@ConfigItem(
-			position = 1,
-			keyName = "showWateringCanOverlay",
-			name = "Show watering can overlay",
-			description = "Configures whether or not the watering can overlay is displayed"
+		position = 1,
+		keyName = "showWateringCanOverlay",
+		name = "Show watering can doses",
+		description = "Configures whether or not the watering can doses are displayed"
 	)
 	default boolean showWateringCanOverlay()
 	{
@@ -60,10 +60,10 @@ public interface TitheFarmPluginConfig extends Config
 	}
 
 	@ConfigItem(
-			position = 2,
-			keyName = "showSack",
-			name = "Show fruit sack",
-			description = "Configures whether or not the fruit sack is displayed"
+		position = 2,
+		keyName = "showSack",
+		name = "Show fruit sack",
+		description = "Configures whether or not the fruit sack is displayed"
 	)
 	default boolean showSack()
 	{

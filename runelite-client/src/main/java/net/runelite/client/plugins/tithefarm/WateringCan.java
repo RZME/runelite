@@ -44,7 +44,7 @@ public enum WateringCan
 	}
 
 	public static WateringCan getWateringCan(int itemId)
-    {
-        return wateringCans.get(itemId);
-    }
+	{
+		return wateringCans.get(itemId);
+	}
 }

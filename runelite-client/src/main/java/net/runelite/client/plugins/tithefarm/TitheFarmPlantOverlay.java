@@ -32,7 +32,11 @@ import net.runelite.client.ui.overlay.OverlayPosition;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.Arc2D;
 
 public class TitheFarmPlantOverlay extends Overlay
@@ -63,6 +67,7 @@ public class TitheFarmPlantOverlay extends Overlay
 	{
 		if (config.enabled())
 		{
+			plugin.getPlants().removeIf(plant -> plant.getPlantTimeRelative() == 1);
 			drawPlants(graphics);
 		}
 		return null;
@@ -80,7 +85,7 @@ public class TitheFarmPlantOverlay extends Overlay
 		Widget viewport = client.getViewportWidget();
 		for (TitheFarmPlant plant : plugin.getPlants())
 		{
-			if (viewport != null && plant.getGameObject().getCanvasLocation() != null && viewport.contains(plant.getGameObject().getCanvasLocation()))
+			if (viewport != null && plant.getGameObject().getCanvasLocation() != null)
 			{
 				switch (plant.getState())
 				{

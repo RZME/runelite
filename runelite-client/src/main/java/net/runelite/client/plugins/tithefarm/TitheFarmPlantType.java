@@ -83,7 +83,7 @@ public enum TitheFarmPlantType
 	}
 
 	public static TitheFarmPlantType getPlantType(int objectId)
-    {
-        return plantTypes.get(objectId);
-    }
+	{
+		return plantTypes.get(objectId);
+	}
 }

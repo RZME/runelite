@@ -10,7 +10,10 @@ import net.runelite.client.ui.overlay.components.TextComponent;
 import net.runelite.client.util.QueryRunner;
 
 import javax.inject.Inject;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 
 class TitheFarmInventoryOverlay extends Overlay
 {
