@@ -54,7 +54,10 @@ public interface TitheFarmPluginConfig extends Config
 			name = "Show watering can overlay",
 			description = "Configures whether or not the watering can overlay is displayed"
 	)
-	default boolean showWateringCanOverlay(){return true;}
+	default boolean showWateringCanOverlay()
+	{
+		return true;
+	}
 
 	@ConfigItem(
 			position = 2,
@@ -75,7 +78,7 @@ public interface TitheFarmPluginConfig extends Config
 	)
 	default Color getColorUnwatered()
 	{
-		return Color.YELLOW;
+		return new Color(255, 187, 0);
 	}
 
 	@ConfigItem(
@@ -86,7 +89,7 @@ public interface TitheFarmPluginConfig extends Config
 	)
 	default Color getColorWatered()
 	{
-		return Color.BLUE;
+		return new Color(0, 153, 255);
 	}
 
 	@ConfigItem(
@@ -97,6 +100,6 @@ public interface TitheFarmPluginConfig extends Config
 	)
 	default Color getColorGrown()
 	{
-		return Color.GREEN;
+		return new Color(0, 217, 0);
 	}
 }

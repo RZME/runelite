@@ -24,24 +24,32 @@
  */
 package net.runelite.client.plugins.tithefarm;
 
-public enum TitheFarmPlantState {
-    UNWATERED,
-    WATERED,
-    DEAD,
-    GROWN;
+public enum TitheFarmPlantState
+{
+	UNWATERED,
+	WATERED,
+	DEAD,
+	GROWN;
 
-    public static TitheFarmPlantState getState(int objectId) {
-        if (TitheFarmPlantType.getPlantType(objectId) == null) {return null;}
-        int baseId = TitheFarmPlantType.getPlantType(objectId).getBaseId();
-        if (objectId == baseId) {return GROWN;}
-        switch ((baseId - objectId) % 3)
-        {
-            case 0:
-                return UNWATERED;
-            case 2:
-                return WATERED;
-            default:
-                return DEAD;
-        }
-    }
+	public static TitheFarmPlantState getState(int objectId)
+    {
+		if (TitheFarmPlantType.getPlantType(objectId) == null)
+		{
+		    return null;
+		}
+		int baseId = TitheFarmPlantType.getPlantType(objectId).getBaseId();
+		if (objectId == baseId)
+		{
+		    return GROWN;
+		}
+		switch ((baseId - objectId) % 3)
+		{
+			case 0:
+				return UNWATERED;
+			case 2:
+				return WATERED;
+			default:
+				return DEAD;
+		}
+	}
 }

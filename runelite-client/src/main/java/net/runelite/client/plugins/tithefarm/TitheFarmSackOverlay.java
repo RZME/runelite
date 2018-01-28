@@ -37,41 +37,42 @@ import java.awt.*;
 
 class TitheFarmSackOverlay extends Overlay
 {
-    private final Client client;
-    private final TitheFarmPluginConfig config;
-    private final PanelComponent panelComponent = new PanelComponent();
+	private final Client client;
+	private final TitheFarmPluginConfig config;
+	private final PanelComponent panelComponent = new PanelComponent();
 
-    @Inject
-    TitheFarmSackOverlay(Client client, TitheFarmPluginConfig config)
-    {
-        setPosition(OverlayPosition.TOP_LEFT);
-        this.client = client;
-        this.config = config;
-    }
+	@Inject
+	TitheFarmSackOverlay(Client client, TitheFarmPluginConfig config)
+	{
+		setPosition(OverlayPosition.TOP_LEFT);
+		this.client = client;
+		this.config = config;
+	}
 
-    @Override
-    public Dimension render(Graphics2D graphics, Point parent)
-    {
-        if (!config.enabled())
-        {
-            return null;
-        }
+	@Override
+	public Dimension render(Graphics2D graphics, Point parent)
+	{
+		if (!config.enabled())
+		{
+			return null;
+		}
 
-        Widget sack = client.getWidget(WidgetInfo.TITHE_FARM);
+		Widget sack = client.getWidget(WidgetInfo.TITHE_FARM);
 
-        panelComponent.getLines().clear();
+		panelComponent.getLines().clear();
 
-        if (sack != null)
-        {
-            sack.setHidden(true);
-            if (config.showSack()) {
-                panelComponent.getLines().add(new PanelComponent.Line(
-                        "Fruit in sack:",
-                        String.valueOf(client.getSetting(Varbits.TITHE_FARM_SACK_AMOUNT))
-                ));
-            }
-        }
+		if (sack != null)
+		{
+			sack.setHidden(true);
+			if (config.showSack())
+			{
+				panelComponent.getLines().add(new PanelComponent.Line(
+						"Fruits in sack:",
+						String.valueOf(client.getSetting(Varbits.TITHE_FARM_SACK_AMOUNT))
+				));
+			}
+		}
 
-        return panelComponent.render(graphics, parent);
-    }
+		return panelComponent.render(graphics, parent);
+	}
 }

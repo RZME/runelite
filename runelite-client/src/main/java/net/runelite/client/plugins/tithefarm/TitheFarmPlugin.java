@@ -70,7 +70,10 @@ public class TitheFarmPlugin extends Plugin
 	private Instant lastActionTime = Instant.ofEpochMilli(0);
 
 	@Provides
-	TitheFarmPluginConfig getConfig(ConfigManager configManager){return configManager.getConfig(TitheFarmPluginConfig.class);}
+	TitheFarmPluginConfig getConfig(ConfigManager configManager)
+	{
+		return configManager.getConfig(TitheFarmPluginConfig.class);
+	}
 
 	@Override
 	protected void startUp() throws Exception
@@ -79,7 +82,10 @@ public class TitheFarmPlugin extends Plugin
 	}
 
 	@Override
-	public Collection<Overlay> getOverlays(){return Arrays.asList(titheFarmOverlay, titheFarmSackOverlay, titheFarmInventoryOverlay);}
+	public Collection<Overlay> getOverlays()
+	{
+		return Arrays.asList(titheFarmOverlay, titheFarmSackOverlay, titheFarmInventoryOverlay);
+	}
 
 	@Subscribe
 	public void onGameObjectsChanged(GameObjectsChanged event)
@@ -94,17 +100,25 @@ public class TitheFarmPlugin extends Plugin
 		TitheFarmPlant newPlant = new TitheFarmPlant(gameObject);
 		TitheFarmPlant oldPlant = getPlantFromCollection(gameObject);
 
-		if (oldPlant == null && newPlant.getType() != TitheFarmPlantType.EMPTY && newPlant.getType() != null)
+		if (newPlant.getType() == null)
+		{
+			return;
+		}
+		else if (oldPlant == null && newPlant.getType() != TitheFarmPlantType.EMPTY)
 		{
 			log.debug("Added plant");
 			plants.add(newPlant);
 		}
-		else if (oldPlant != null && newPlant.getType() == TitheFarmPlantType.EMPTY)
+		else if (oldPlant == null)
+		{
+			return;
+		}
+		else if (newPlant.getType() == TitheFarmPlantType.EMPTY)
 		{
 			log.debug("Removed plant");
 			plants.remove(oldPlant);
 		}
-		else if (oldPlant != null && newPlant.getType() != TitheFarmPlantType.EMPTY && newPlant.getType() != null
+		else if (newPlant.getType() != TitheFarmPlantType.EMPTY
 				&& oldPlant.getGameObject().getWorldLocation().equals(newPlant.getGameObject().getWorldLocation())
 				&& oldPlant.getState() != newPlant.getState())
 		{

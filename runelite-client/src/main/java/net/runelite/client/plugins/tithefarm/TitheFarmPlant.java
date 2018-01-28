@@ -30,7 +30,6 @@ import net.runelite.api.GameObject;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Objects;
 
 class TitheFarmPlant
 {
