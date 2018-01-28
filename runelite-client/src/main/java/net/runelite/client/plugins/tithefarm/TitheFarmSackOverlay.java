@@ -70,6 +70,10 @@ class TitheFarmSackOverlay extends Overlay
 						"Fruits in sack:",
 						String.valueOf(client.getSetting(Varbits.TITHE_FARM_SACK_AMOUNT))
 				));
+				panelComponent.getLines().add(new PanelComponent.Line(
+						"Points:",
+						String.valueOf(client.getSetting(Varbits.TITHE_FARM_POINTS))
+				));
 			}
 		}
 

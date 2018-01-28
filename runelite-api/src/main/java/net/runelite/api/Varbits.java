@@ -198,7 +198,8 @@ public enum Varbits
 	 * Tithe Farm
 	 */
 	TITHE_FARM_SACK_AMOUNT(4900, 1329, 13, 19),
-	TITHE_FARM_SACK_ICON(5370, 1329, 11, 12);
+	TITHE_FARM_SACK_ICON(5370, 1329, 11, 12),
+	TITHE_FARM_POINTS(4893, 1105, 11, 20);
 
 	/**
 	 * varbit id
