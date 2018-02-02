@@ -38,7 +38,6 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.Overlay;
 
 import javax.inject.Inject;
-import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
