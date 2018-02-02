@@ -56,7 +56,7 @@ public class TitheFarmPlantOverlay extends Overlay
 	TitheFarmPlantOverlay(@Nullable Client client, TitheFarmPlugin plugin, TitheFarmPluginConfig config)
 	{
 		setPosition(OverlayPosition.DYNAMIC);
-		setLayer(OverlayLayer.UNDER_WIDGETS);
+		setLayer(OverlayLayer.ABOVE_SCENE);
 		this.plugin = plugin;
 		this.config = config;
 		this.client = client;
