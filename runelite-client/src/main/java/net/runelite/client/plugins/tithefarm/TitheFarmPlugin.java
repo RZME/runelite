@@ -35,8 +35,10 @@ import javax.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameObject;
+import net.runelite.api.GameState;
 import net.runelite.api.Point;
 import net.runelite.api.events.GameObjectSpawned;
+import net.runelite.api.events.GameStateChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -98,7 +100,7 @@ public class TitheFarmPlugin extends Plugin
 			return;
 		}
 
-		TitheFarmPlantState state = TitheFarmPlantState.getState(gameObject.getFlags());
+		TitheFarmPlantState state = TitheFarmPlantState.getState(gameObject.getId());
 
 		TitheFarmPlant newPlant = new TitheFarmPlant(state, type, gameObject);
 		TitheFarmPlant oldPlant = getPlantFromCollection(gameObject);
