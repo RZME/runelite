@@ -24,12 +24,11 @@
  */
 package net.runelite.client.plugins.tithefarm;
 
+import java.time.Duration;
+import java.time.Instant;
 import lombok.Getter;
 import lombok.Setter;
 import net.runelite.api.GameObject;
-
-import java.time.Duration;
-import java.time.Instant;
 
 class TitheFarmPlant
 {
@@ -40,20 +39,19 @@ class TitheFarmPlant
 	private Instant planted;
 
 	@Getter
-	@Setter
-	private TitheFarmPlantState state;
+	private final TitheFarmPlantState state;
 
 	@Getter
-	private TitheFarmPlantType type;
+	private final TitheFarmPlantType type;
 
 	@Getter
 	private final GameObject gameObject;
 
-	TitheFarmPlant(GameObject gameObject)
+	TitheFarmPlant(TitheFarmPlantState state, TitheFarmPlantType type, GameObject gameObject)
 	{
 		this.planted = Instant.now();
-		this.state = TitheFarmPlantState.getState(gameObject.getId());
-		this.type = TitheFarmPlantType.getPlantType(gameObject.getId());
+		this.state = state;
+		this.type = type;
 		this.gameObject = gameObject;
 	}
 

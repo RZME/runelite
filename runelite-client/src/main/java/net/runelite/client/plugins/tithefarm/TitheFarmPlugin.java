@@ -26,22 +26,22 @@ package net.runelite.client.plugins.tithefarm;
 
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Provides;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.GameObject;
-import net.runelite.api.Point;
-import net.runelite.api.events.ConfigChanged;
-import net.runelite.api.events.GameObjectSpawned;
-import net.runelite.client.config.ConfigManager;
-import net.runelite.client.plugins.Plugin;
-import net.runelite.client.plugins.PluginDescriptor;
-import net.runelite.client.ui.overlay.Overlay;
-
-import javax.inject.Inject;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import javax.inject.Inject;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.GameObject;
+import net.runelite.api.Point;
+import net.runelite.api.events.GameObjectSpawned;
+import net.runelite.client.config.ConfigManager;
+import net.runelite.client.plugins.Plugin;
+import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.task.Schedule;
+import net.runelite.client.ui.overlay.Overlay;
 
 @Slf4j
 @PluginDescriptor(
@@ -49,7 +49,6 @@ import java.util.Set;
 )
 public class TitheFarmPlugin extends Plugin
 {
-
 	@Inject
 	private TitheFarmPluginConfig config;
 
@@ -72,15 +71,15 @@ public class TitheFarmPlugin extends Plugin
 	}
 
 	@Override
-	protected void startUp() throws Exception
-	{
-		titheFarmOverlay.updateColors();
-	}
-
-	@Override
 	public Collection<Overlay> getOverlays()
 	{
 		return Arrays.asList(titheFarmOverlay, titheFarmSackOverlay, titheFarmInventoryOverlay);
+	}
+
+	@Schedule(period = 600, unit = ChronoUnit.MILLIS)
+	public void checkPlants()
+	{
+		plants.removeIf(plant -> plant.getPlantTimeRelative() == 1);
 	}
 
 	@Subscribe
@@ -93,16 +92,20 @@ public class TitheFarmPlugin extends Plugin
 
 		GameObject gameObject = event.getGameObject();
 
-		TitheFarmPlant newPlant = new TitheFarmPlant(gameObject);
-		TitheFarmPlant oldPlant = getPlantFromCollection(gameObject);
-
-		if (newPlant.getType() == null)
+		TitheFarmPlantType type = TitheFarmPlantType.getPlantType(gameObject.getId());
+		if (type == null)
 		{
 			return;
 		}
-		else if (oldPlant == null && newPlant.getType() != TitheFarmPlantType.EMPTY)
+
+		TitheFarmPlantState state = TitheFarmPlantState.getState(gameObject.getFlags());
+
+		TitheFarmPlant newPlant = new TitheFarmPlant(state, type, gameObject);
+		TitheFarmPlant oldPlant = getPlantFromCollection(gameObject);
+
+		if (oldPlant == null && newPlant.getType() != TitheFarmPlantType.EMPTY)
 		{
-			log.debug("Added plant");
+			log.debug("Added plant {}", newPlant);
 			plants.add(newPlant);
 		}
 		else if (oldPlant == null)
@@ -111,12 +114,10 @@ public class TitheFarmPlugin extends Plugin
 		}
 		else if (newPlant.getType() == TitheFarmPlantType.EMPTY)
 		{
-			log.debug("Removed plant");
+			log.debug("Removed plant {}", oldPlant);
 			plants.remove(oldPlant);
 		}
-		else if (newPlant.getType() != TitheFarmPlantType.EMPTY
-				&& oldPlant.getGameObject().getWorldLocation().equals(newPlant.getGameObject().getWorldLocation())
-				&& oldPlant.getState() != newPlant.getState())
+		else if (oldPlant.getState() != newPlant.getState())
 		{
 			if (newPlant.getState() == TitheFarmPlantState.WATERED)
 			{
@@ -131,15 +132,6 @@ public class TitheFarmPlugin extends Plugin
 				plants.remove(oldPlant);
 				plants.add(newPlant);
 			}
-		}
-	}
-
-	@Subscribe
-	public void onConfigChanged(ConfigChanged event)
-	{
-		if (event.getGroup().equals("tithefarmplugin"))
-		{
-			titheFarmOverlay.updateColors();
 		}
 	}
 
