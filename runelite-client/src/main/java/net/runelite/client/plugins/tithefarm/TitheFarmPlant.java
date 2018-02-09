@@ -29,6 +29,7 @@ import java.time.Instant;
 import lombok.Getter;
 import lombok.Setter;
 import net.runelite.api.GameObject;
+import net.runelite.api.Point;
 
 class TitheFarmPlant
 {
@@ -45,6 +46,9 @@ class TitheFarmPlant
 	private final TitheFarmPlantType type;
 
 	@Getter
+	private final Point worldLocation;
+
+	@Getter
 	private final GameObject gameObject;
 
 	TitheFarmPlant(TitheFarmPlantState state, TitheFarmPlantType type, GameObject gameObject)
@@ -52,6 +56,7 @@ class TitheFarmPlant
 		this.planted = Instant.now();
 		this.state = state;
 		this.type = type;
+		this.worldLocation = gameObject.getWorldLocation();
 		this.gameObject = gameObject;
 	}
 
