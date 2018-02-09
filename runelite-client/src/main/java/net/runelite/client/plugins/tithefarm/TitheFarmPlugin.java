@@ -119,7 +119,7 @@ public class TitheFarmPlugin extends Plugin
 			log.debug("Removed plant {}", oldPlant);
 			plants.remove(oldPlant);
 		}
-		else if (oldPlant.getState() != newPlant.getState())
+		else// if (oldPlant.getState() != newPlant.getState())
 		{
 			if (newPlant.getState() == TitheFarmPlantState.WATERED)
 			{
