@@ -24,13 +24,6 @@
  */
 package net.runelite.client.callback;
 
-import net.runelite.api.TextureProvider;
-import net.runelite.api.events.GameTick;
-import net.runelite.api.events.ProjectileMoved;
-import net.runelite.api.events.MenuEntryAdded;
-import net.runelite.api.events.ChatMessage;
-import net.runelite.api.events.MenuOptionClicked;
-import net.runelite.api.events.SetMessage;
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Injector;
 import java.awt.Graphics;
@@ -45,6 +38,16 @@ import net.runelite.api.PacketBuffer;
 import net.runelite.api.Point;
 import net.runelite.api.Projectile;
 import net.runelite.api.Region;
+import net.runelite.api.RenderOverview;
+import net.runelite.api.TextureProvider;
+import net.runelite.api.WorldMapManager;
+import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.GameTick;
+import net.runelite.api.events.MenuEntryAdded;
+import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.events.ProjectileMoved;
+import net.runelite.api.events.SetMessage;
+import net.runelite.api.widgets.Widget;
 import net.runelite.client.RuneLite;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.game.DeathChecker;
@@ -71,6 +74,7 @@ public class Hooks
 	private static final OverlayRenderer renderer = injector.getInstance(OverlayRenderer.class);
 	private static final DeathChecker death = new DeathChecker(client, eventBus);
 	private static final GameTick tick = new GameTick();
+	private static WorldMapManager worldMapManager;
 
 	private static long lastCheck;
 
@@ -96,6 +100,17 @@ public class Hooks
 			infoBoxManager.cull();
 
 			chatMessageManager.process();
+
+			Widget widget = client.getWidget(595, 0);
+			if (widget == null) {
+				RenderOverview renderOverview = client.getRenderOverview();
+				WorldMapManager manager = renderOverview.getWorldMapManager();
+
+				if (manager.isLoaded()) {
+//					System.out.println("LOADED AND NOT OPEN - RELOADING MAP DATA");
+//					renderOverview.initializeWorldMap(renderOverview.getWorldMapData());
+				}
+			}
 		}
 		catch (Exception ex)
 		{

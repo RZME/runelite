@@ -472,4 +472,7 @@ public interface RSClient extends RSGameEngine, Client
 	@Import("preferences")
 	@Override
 	RSPreferences getPreferences();
+
+	@Import("renderOverview")
+	RSRenderOverview getRenderOverview();
 }
