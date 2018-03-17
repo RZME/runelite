@@ -9,7 +9,6 @@ import net.runelite.cache.ItemManager;
 import net.runelite.cache.SpriteManager;
 import net.runelite.cache.StoreLocation;
 import net.runelite.cache.TextureManager;
-import net.runelite.cache.definitions.ItemDefinition;
 import net.runelite.cache.definitions.ModelDefinition;
 import net.runelite.cache.definitions.loaders.ModelLoader;
 import net.runelite.cache.definitions.providers.ModelProvider;
@@ -26,29 +25,26 @@ public class ItemSpriteFactoryTest
 		File base = StoreLocation.LOCATION;
 //			outDir = folder.newFolder();
 
-		int count = 0;
+//		int count = 0;
 
-		try (Store store = new Store(base)) {
+		try (Store store = new Store(base))
+		{
 			store.load();
 
 			ItemManager itemManager = new ItemManager(store);
 			itemManager.load();
 
-//			ItemDefinition def = itemManager.getItem(6570);
-			int itemID = 7668;
-			ItemDefinition def = itemManager.getItem(itemID);
-//			graphics.Rasterizer3D_zoom = 512; // you don't actually need to set this
-			//Graphics3D.setBrightness(0.6D); // .6 - .9
+			int itemID = 995;
 
 			ModelProvider modelProvider = new ModelProvider()
 			{
 				@Override
 				public ModelDefinition provide(int modelId) throws IOException
 				{
-							Index models = store.getIndex(IndexType.MODELS);
-		Archive archive = models.getArchive(modelId);
+					Index models = store.getIndex(IndexType.MODELS);
+					Archive archive = models.getArchive(modelId);
 
-		byte[] data = archive.decompress(store.getStorage().loadArchive(archive));
+					byte[] data = archive.decompress(store.getStorage().loadArchive(archive));
 					ModelDefinition inventoryModel = new ModelLoader().load(modelId, data);
 					return inventoryModel;
 				}
@@ -59,27 +55,14 @@ public class ItemSpriteFactoryTest
 
 			TextureManager textureManager = new TextureManager(store);
 			textureManager.load();
-//
-//			TextureProvider textureProvider = new TextureProvider(textureManager, spriteManager);
-//			ItemSpriteFactory.spriteManager = new SpriteManager(store);
-//			ItemSpriteFactory.spriteManager.load();
 
-			BufferedImage sprite = ItemSpriteFactory.createSprite(modelProvider, spriteManager, textureManager, def, 1, 1, 3153952, 0, false);
+
+			BufferedImage sprite = ItemSpriteFactory.createSprite(itemManager, modelProvider, spriteManager, textureManager,
+				itemID, 1, 1, 3153952, 0, false);
 
 			File out = new File("D:\\rs\\07\\temp\\" + itemID + ".png");
 			BufferedImage img = sprite;
 			ImageIO.write(img, "PNG", out);
-
-//			Storage storage = store.getStorage();
-//			Index index = store.getIndex(IndexType.CONFIGS);
-//			Archive archive = index.getArchive(ConfigType.ITEM.getId());
-//
-//			byte[] archiveData = storage.loadArchive(archive);
-//			ArchiveFiles files = archive.getFiles(archiveData);
-//
-//			for (FSFile f : files.getFiles())
-//			{
-//				ItemDefinition def = loader.load(f.getFileId(), f.getContents());
 		}
 	}
 }

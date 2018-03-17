@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import net.runelite.cache.definitions.ItemDefinition;
 import net.runelite.cache.definitions.ModelDefinition;
+import net.runelite.cache.definitions.providers.ItemProvider;
 import net.runelite.cache.definitions.providers.ModelProvider;
 import net.runelite.cache.definitions.providers.SpriteProvider;
 import net.runelite.cache.definitions.providers.TextureProvider2;
@@ -12,7 +13,10 @@ import net.runelite.cache.models.VertexNormal;
 
 public class ItemSpriteFactory
 {
-	public static final BufferedImage createSprite(ModelProvider modelProvider, SpriteProvider spriteProvider, TextureProvider2 textureProvider2, ItemDefinition item, int quantity, int border, int shadowColor, int stackable, boolean noted) throws IOException
+	public static final BufferedImage createSprite(ItemProvider itemProvider, ModelProvider modelProvider,
+												   SpriteProvider spriteProvider, TextureProvider2 textureProvider2,
+												   int itemId, int quantity, int border, int shadowColor,
+												   int stackable, boolean noted) throws IOException
 	{
 		if (quantity == -1)
 		{
@@ -23,6 +27,7 @@ public class ItemSpriteFactory
 			stackable = 1;
 		}
 
+		ItemDefinition item = itemProvider.provide(itemId);
 
 		if (quantity > 1 && item.countObj != null)
 		{
@@ -35,10 +40,11 @@ public class ItemSpriteFactory
 					stackItemID = item.countObj[i];
 				}
 			}
-//
-//			if(stackItemID != -1) {
+
+			if(stackItemID != -1) {
+				item = itemProvider.provide(stackItemID);
 //				item = class81.getItemDefinition(stackItemID);
-//			}
+			}
 		}
 
 		Model itemModel = getModel(modelProvider, item, 1); //item.getModel(1);
