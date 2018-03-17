@@ -5,187 +5,61 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 class Model extends Renderable
 {
-
-
-//	static Model field1862;
-
-//	static byte[] field1824;
-
-
-//	static Model field1825;
-
-//	static byte[] field1826;
-
 	boolean[] field1887 = new boolean[4700];
-
 	boolean[] field1885 = new boolean[4700];
-
-
 	int[] modelViewportYs = new int[4700];
-
-
-	int[] modelViewportXs= new int[4700];
-
+	int[] modelViewportXs = new int[4700];
 	int[] modelViewportZs = new int[4700];
-
-
 	int[] yViewportBuffer = new int[4700];
-
-	 int[] field1839=new int[4700];
-
-	 int[] field1869=new int[4700];
-
-	int[] field1871= new int[1600];
-
-	 int[][] field1868=new int[1600][512];
-
-	int[] field1872=new int[12];
-
-	 int[][] field1874=new int[12][2000];
-
-	int[] field1857=new int[2000];
-
-	 int[] field1863= new int[2000];
-
-	 int[] field1877= new int[12];
-
-	int[] field1831= new int[10];
-
-	 int[] field1837= new int[10];
-
-
-	 int[] xViewportBuffer=new int[10];
-
-//	static int field1881;
-//
-//	static int field1845;
-//
-//	static int field1883;
-
-
+	int[] field1839 = new int[4700];
+	int[] field1869 = new int[4700];
+	int[] field1871 = new int[1600];
+	int[][] field1868 = new int[1600][512];
+	int[] field1872 = new int[12];
+	int[][] field1874 = new int[12][2000];
+	int[] field1857 = new int[2000];
+	int[] field1863 = new int[2000];
+	int[] field1877 = new int[12];
+	int[] field1831 = new int[10];
+	int[] field1837 = new int[10];
+	int[] xViewportBuffer = new int[10];
 	static int[] Model_sine;
-
-
 	static int[] Model_cosine;
-
-//	static int[] field1889;
-
 	static int[] field1890;
-
-
 	int verticesCount;
-
-
 	int[] verticesX;
-
-
 	int[] verticesY;
-
-
 	int[] verticesZ;
-
-
 	int indicesCount;
-
-
 	int[] indices1;
-
-
 	int[] indices2;
-
-
 	int[] indices3;
-
 	int[] field1856;
-
 	int[] field1854;
-
 	int[] field1823;
-
 	byte[] field1838;
-
 	byte[] field1882;
-
 	byte[] field1840;
-
 	short[] field1841;
-
 	byte field1842;
-
 	int field1852;
-
 	int[] field1844;
-
 	int[] field1865;
-
 	int[] field1846;
-
-//	int[][] field1847;
-//
-//	int[][] field1848;
-
 	public boolean isItemModel;
-
-
 	int boundsType;
-
-
 	int bottomY;
-
-
 	int XYZMag;
-
-
 	int diameter;
-
-
 	int radius;
-
-
-//	public int centerX;
-//
-//
-//	public int centerY;
-//
-//
-//	public int centerZ;
-
-
 	public int extremeX;
-
-
 	public int extremeY;
-
-
 	public int extremeZ;
 
 	static
 	{
-//		field1862 = new Model();
-//		field1824 = new byte[1];
-//		field1825 = new Model();
-//		field1826 = new byte[1];
-//		field1887 = new boolean[4700];
-//		field1885 = new boolean[4700];
-//		modelViewportYs = new int[4700];
-//		modelViewportXs = new int[4700];
-//		modelViewportZs = new int[4700];
-//		yViewportBuffer = new int[4700];
-//		field1839 = new int[4700];
-		//field1869 = new int[4700];
-//		field1871 = new int[1600];
-		//field1868 = new int[1600][512];
-//		field1872 = new int[12];
-//		field1874 = new int[12][2000];
-//		field1857 = new int[2000];
-//		field1863 = new int[2000];
-//		field1877 = new int[12];
-		//field1831 = new int[10];
-	//	field1837 = new int[10];
-		//xViewportBuffer = new int[10];
 		Model_sine = Graphics3D.SINE;
 		Model_cosine = Graphics3D.COSINE;
-//		field1889 = Graphics3D.colorPalette;
 		field1890 = Graphics3D.field1933;
 	}
 
@@ -237,8 +111,6 @@ class Model extends Renderable
 			this.diameter = this.radius + (int) (Math.sqrt((double) (this.XYZMag * this.XYZMag + this.bottomY * this.bottomY)) + 0.99D);
 		}
 	}
-
-
 
 
 //	void method2759(int var1)
