@@ -23,17 +23,7 @@ public class ItemSpriteFactory
 			stackable = 1;
 		}
 
-//		long var6 = ((long)shadowColor << 42) + (long)itemId + ((long)quantity << 16) + ((long)border << 38) + ((long)stackable << 40);
-//		SpritePixels var8;
-//		if(!noted) {
-//			var8 = (SpritePixels)ItemComposition.itemSpriteCache.get(var6);
-//			if(var8 != null) {
-//				return var8;
-//			}
-//		}
 
-//		ItemDefinition item = null;
-//		ItemComposition item = class81.getItemDefinition(itemId);
 		if (quantity > 1 && item.countObj != null)
 		{
 			int stackItemID = -1;
@@ -51,9 +41,6 @@ public class ItemSpriteFactory
 //			}
 		}
 
-//		ModelDefinition itemModel = null;
-//		Index models = store.getIndex(IndexType.MODELS);
-//		models.getArchive()
 		Model itemModel = getModel(modelProvider, item, 1); //item.getModel(1);
 		if (itemModel == null)
 		{
@@ -79,12 +66,6 @@ public class ItemSpriteFactory
 //					return null;
 //				}
 //			}
-
-//			SpriteManager spriteManager = new SpriteManager(store);
-//			spriteManager.load();
-//
-//			TextureManager textureManager = new TextureManager(store);
-//			textureManager.load();
 
 			TextureProvider textureProvider = new TextureProvider(textureProvider2, spriteProvider);
 
@@ -159,10 +140,6 @@ public class ItemSpriteFactory
 			graphics.setRasterBuffer(graphics.graphicsPixels,
 				graphics.graphicsPixelsWidth,
 				graphics.graphicsPixelsHeight);
-
-//			int[] drawRegion = new int[4];
-//			graphics.copyDrawRegion(drawRegion);
-//			graphics.setDrawRegion(drawRegion);
 
 			graphics.setRasterClipping();
 			graphics.rasterGouraudLowRes = true;

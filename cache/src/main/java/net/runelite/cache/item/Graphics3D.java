@@ -17,66 +17,25 @@ class Graphics3D extends Rasterizer2D
 	}
 
 	private final TextureProvider textureProvider;
-
-
 	boolean rasterClipEnable;
-
 	boolean field1909;
-
-
 	boolean lowMem;
-
-
-	public boolean rasterGouraudLowRes=true;
-
-
+	public boolean rasterGouraudLowRes = true;
 	int rasterAlpha;
-
-
 	public int Rasterizer3D_zoom = 512;
-
-
 	int centerX;
-
-
 	int centerY;
-
-
 	int rasterClipX;
-
-
 	int Rasterizer3D_clipHeight;
-
-
 	int Rasterizer3D_clipNegativeMidX;
-
-
 	int Rasterizer3D_clipMidX2;
-
-
 	int Rasterizer3D_clipNegativeMidY;
-
-
 	int Rasterizer3D_clipMidY2;
-
-
-	int[] rasterClipY= new int[1024];
-
-
+	int[] rasterClipY = new int[1024];
 	public int[] colorPalette = new int[65536];
-
-
-//	public static TextureProvider textureLoader;
-
-	static int[] field1932= new int[512];
-
+	static int[] field1932 = new int[512];
 	static int[] field1933 = new int[2048];
 
-
-//	public static int[] SINE;
-//
-//
-//	public static int[] COSINE;
 
 	static
 	{
