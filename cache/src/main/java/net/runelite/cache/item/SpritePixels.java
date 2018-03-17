@@ -89,7 +89,7 @@ class SpritePixels extends Rasterizer2D
 		x += this.offsetX;
 		y += this.offsetY;
 		int pixelIndex = x + y * graphicsPixelsWidth;
-		int var4 = 0;
+		int deltaIndex = 0;
 		int height = this.height;
 		int width = this.width;
 		int var7 = graphicsPixelsWidth - width;
@@ -99,7 +99,7 @@ class SpritePixels extends Rasterizer2D
 			int deltaY = drawingAreaTop - y;
 			height -= deltaY;
 			y = drawingAreaTop;
-			var4 += deltaY * width;
+			deltaIndex += deltaY * width;
 			pixelIndex += deltaY * graphicsPixelsWidth;
 		}
 
@@ -113,7 +113,7 @@ class SpritePixels extends Rasterizer2D
 			int deltaX = draw_region_x - x;
 			width -= deltaX;
 			x = draw_region_x;
-			var4 += deltaX;
+			deltaIndex += deltaX;
 			pixelIndex += deltaX;
 			var8 += deltaX;
 			var7 += deltaX;
@@ -129,7 +129,7 @@ class SpritePixels extends Rasterizer2D
 
 		if (width > 0 && height > 0)
 		{
-			method5843(graphicsPixels, this.pixels, 0, var4, pixelIndex, width, height, var7, var8);
+			method5843(graphicsPixels, this.pixels, 0, deltaIndex, pixelIndex, width, height, var7, var8);
 		}
 	}
 

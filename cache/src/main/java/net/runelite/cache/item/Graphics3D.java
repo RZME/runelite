@@ -130,26 +130,23 @@ class Graphics3D extends Rasterizer2D
 		rasterClipX = var2 - var0;
 		Rasterizer3D_clipHeight = var3 - var1;
 		Rasterizer3D_method3();
-		int var4;
-		int var5;
+
 		if (rasterClipY.length < Rasterizer3D_clipHeight)
 		{
-			var5 = Rasterizer3D_clipHeight;
-			--var5;
-			var5 |= var5 >>> 1;
-			var5 |= var5 >>> 2;
-			var5 |= var5 >>> 4;
-			var5 |= var5 >>> 8;
-			var5 |= var5 >>> 16;
-			var4 = var5 + 1;
-			rasterClipY = new int[var4];
+			// Find closest 2^n >= v
+			int v = Rasterizer3D_clipHeight - 1;
+			v |= v >>> 1;
+			v |= v >>> 2;
+			v |= v >>> 4;
+			v |= v >>> 8;
+			v |= v >>> 16;
+			rasterClipY = new int[v + 1];
 		}
 
-		var4 = var0 + graphicsPixelsWidth * var1;
-
-		for (var5 = 0; var5 < Rasterizer3D_clipHeight; ++var5)
+		int var4 = var0 + graphicsPixelsWidth * var1;
+		for (int i = 0; i < Rasterizer3D_clipHeight; ++i)
 		{
-			rasterClipY[var5] = var4;
+			rasterClipY[i] = var4;
 			var4 += graphicsPixelsWidth;
 		}
 
