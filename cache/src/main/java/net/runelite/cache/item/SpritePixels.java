@@ -4,22 +4,11 @@ import java.awt.image.BufferedImage;
 
 class SpritePixels extends Rasterizer2D
 {
-
-
 	public int[] pixels;
-
-
 	public int width;
-
-
 	public int height;
-
-
 	public int offsetX;
-
-
 	int offsetY;
-
 
 	public SpritePixels(int[] var1, int var2, int var3)
 	{
@@ -34,7 +23,6 @@ class SpritePixels extends Rasterizer2D
 	{
 		this(new int[var2 * var1], var1, var2);
 	}
-
 
 	public void drawBorder(int color)
 	{
@@ -96,7 +84,6 @@ class SpritePixels extends Rasterizer2D
 
 	}
 
-
 	public void drawAt(int x, int y)
 	{
 		x += this.offsetX;
@@ -146,7 +133,6 @@ class SpritePixels extends Rasterizer2D
 		}
 	}
 
-
 	static void method5843(int[] rasterizerPixels, int[] spritePixels, int var2, int var3, int pixelIndex, int width, int height, int var7, int var8)
 	{
 		int var9 = -(width >> 2);
@@ -171,9 +157,13 @@ class SpritePixels extends Rasterizer2D
 			{
 				var2 = spritePixels[var3++];
 				if (var2 != 0)
+				{
 					rasterizerPixels[pixelIndex++] = var2;
+				}
 				else
+				{
 					++pixelIndex;
+				}
 			}
 
 			pixelIndex += var7;
@@ -181,13 +171,9 @@ class SpritePixels extends Rasterizer2D
 		}
 
 	}
-
-
+	
 	public BufferedImage toBufferedImage()
 	{
-//      int width = this.width;
-//      int height = getHeight();
-//      int[] pixels = getPixels();
 		int[] transPixels = new int[pixels.length];
 		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
