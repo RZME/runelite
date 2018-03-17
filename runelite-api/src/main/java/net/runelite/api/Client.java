@@ -92,11 +92,21 @@ public interface Client extends GameEngine
 
 	ItemComposition getItemDefinition(int id);
 
-	SpritePixels createItemSprite(int itemId, int quantity, int border, int shadowColor, int stackable, boolean noted);
+	SpritePixels createItemSprite(int itemId, int quantity, int border, int shadowColor, int stackable, boolean noted, int scale);
 
 	int getBaseX();
 
 	int getBaseY();
+
+	int getMouseCurrentButton();
+
+	boolean isDraggingWidget();
+
+	Widget getDraggedWidget();
+
+	Widget getDraggedOnWidget();
+
+	void setDraggedOnWidget(Widget widget);
 
 	Widget[] getWidgetRoots();
 

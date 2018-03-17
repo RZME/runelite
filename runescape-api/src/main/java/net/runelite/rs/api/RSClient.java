@@ -28,6 +28,7 @@ import java.util.Map;
 import net.runelite.api.BufferProvider;
 import net.runelite.api.Client;
 import net.runelite.api.World;
+import net.runelite.api.widgets.Widget;
 import net.runelite.mapping.Construct;
 import net.runelite.mapping.Import;
 
@@ -110,6 +111,26 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Import("gameState")
 	int getRSGameState();
+
+	@Import("mouseCurrentButton")
+	@Override
+	int getMouseCurrentButton();
+
+	@Import("draggingWidget")
+	@Override
+	boolean isDraggingWidget();
+
+	@Import("draggedWidget")
+	@Override
+	RSWidget getDraggedWidget();
+
+	@Import("draggedOnWidget")
+	@Override
+	RSWidget getDraggedOnWidget();
+
+	@Import("draggedOnWidget")
+	@Override
+	void setDraggedOnWidget(Widget widget);
 
 	@Import("widgets")
 	RSWidget[][] getWidgets();
@@ -250,7 +271,6 @@ public interface RSClient extends RSGameEngine, Client
 	RSItemComposition getItemDefinition(int itemId);
 
 	@Import("createSprite")
-	@Override
 	RSSpritePixels createItemSprite(int itemId, int quantity, int thickness, int borderColor, int stackable, boolean noted);
 
 	@Import("componentTable")
@@ -499,6 +519,12 @@ public interface RSClient extends RSGameEngine, Client
 
 	@Import("pitchCos")
 	void setPitchCos(int v);
+
+	@Import("Rasterizer3D_zoom")
+	int get3dZoom();
+
+	@Import("Rasterizer3D_zoom")
+	void set3dZoom(int zoom);
 
 	@Import("renderOverview")
 	RSRenderOverview getRenderOverview();
