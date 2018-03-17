@@ -41,13 +41,13 @@ public class ItemSpriteFactory
 				}
 			}
 
-			if(stackItemID != -1) {
+			if (stackItemID != -1)
+			{
 				item = itemProvider.provide(stackItemID);
-//				item = class81.getItemDefinition(stackItemID);
 			}
 		}
 
-		Model itemModel = getModel(modelProvider, item, 1); //item.getModel(1);
+		Model itemModel = getModel(modelProvider, item);
 		if (itemModel == null)
 		{
 			return null;
@@ -103,12 +103,12 @@ public class ItemSpriteFactory
 
 			itemModel.calculateBoundsCylinder();
 			itemModel.rotateAndProject(graphics, 0,
-					item.yan2d,
-					item.zan2d,
-					item.xan2d,
-					item.xOffset2d,
-					itemModel.modelHeight / 2 + var17 + item.yOffset2d,
-					var18 + item.yOffset2d);
+				item.yan2d,
+				item.zan2d,
+				item.xan2d,
+				item.xOffset2d,
+				itemModel.modelHeight / 2 + var17 + item.yOffset2d,
+				var18 + item.yOffset2d);
 			if (item.boughtTemplateId != -1)
 			{
 				auxSpritePixels.drawAt(0, 0);
@@ -153,35 +153,10 @@ public class ItemSpriteFactory
 		}
 	}
 
-	private static Model getModel(ModelProvider modelProvider, ItemDefinition item, int quantity) throws IOException
+	private static Model getModel(ModelProvider modelProvider, ItemDefinition item) throws IOException
 	{
-//		if(item.countObj != null && quantity > 1) {
-//			int itemModelID = -1;
-//
-//			for(int i = 0; i < 10; ++i) {
-//				if(quantity >= item.countCo[i] && item.countCo[i] != 0) {
-//					itemModelID = item.countObj[i];
-//				}
-//			}
-//
-//			if(itemModelID != -1) {
-//				return class81.getItemDefinition(itemModelID).getModel(1);
-//			}
-//		}
-//
-//		Model itemModel = (Model)itemModelCache.get((long)this.id);
-//		if(itemModel != null) {
-//			return itemModel;
-//		} else {
-//		Index models = store.getIndex(IndexType.MODELS);
-//		Archive archive = models.getArchive(item.inventoryModel);
-//
-//		byte[] data = archive.decompress(store.getStorage().loadArchive(archive));
-
 		Model itemModel;
 		ModelDefinition inventoryModel = modelProvider.provide(item.inventoryModel);
-//		ModelDefinition inventoryModel = new ModelLoader().load(item.inventoryModel, data);
-//			ModelData inventoryModel = ModelData.method2594(ItemDefinition_modelIndexCache, item.inventoryModel, 0);
 		if (inventoryModel == null)
 		{
 			return null;
@@ -201,18 +176,18 @@ public class ItemSpriteFactory
 				}
 			}
 
-//				if(item.textureFind != null) {
-//					for(int i = 0; i < item.textureFind.length; ++i) {
-//						inventoryModel.method2609(item.textureFind[i], item.textureReplace[i]);
-//					}
-//				}
+			if (item.textureFind != null)
+			{
+				for (int i = 0; i < item.textureFind.length; ++i)
+				{
+					inventoryModel.retexture(item.textureFind[i], item.textureReplace[i]);
+				}
+			}
 
 			itemModel = light(inventoryModel, item.ambient + 64, item.contrast + 768, -50, -10, -50);
 			itemModel.isItemModel = true;
-			//itemModelCache.put(itemModel, (long)this.id);
 			return itemModel;
 		}
-		//}
 	}
 
 	public static Model light(ModelDefinition def, int ambient, int contrast, int x, int y, int z)
@@ -352,27 +327,15 @@ public class ItemSpriteFactory
 				else
 				{
 					int var15 = def.faceColors[faceIdx] & '\uffff';
-//					if(def.field1741 != null && def.field1741[def.faceVertexIndices1[faceIdx]] != null) {
-//						vertexNormal = def.field1741[def.faceVertexIndices1[faceIdx]];
-//					} else {
 					vertexNormal = def.vertexNormals[def.faceVertexIndices1[faceIdx]];
-					//}
 
 					tmp = (y * vertexNormal.y + z * vertexNormal.z + x * vertexNormal.x) / (var7 * vertexNormal.magnitude) + ambient;
 					litModel.field1856[faceIdx] = method2608(var15, tmp);
-//					if(def.field1741 != null && def.field1741[def.faceVertexIndices2[faceIdx]] != null) {
-//						vertexNormal = def.field1741[def.faceVertexIndices2[faceIdx]];
-//					} else {
 					vertexNormal = def.vertexNormals[def.faceVertexIndices2[faceIdx]];
-					//	}
 
 					tmp = (y * vertexNormal.y + z * vertexNormal.z + x * vertexNormal.x) / (var7 * vertexNormal.magnitude) + ambient;
 					litModel.field1854[faceIdx] = method2608(var15, tmp);
-//					if(def.field1741 != null && def.field1741[def.faceVertexIndices3[faceIdx]] != null) {
-//						vertexNormal = def.field1741[def.faceVertexIndices3[faceIdx]];
-//					} else {
 					vertexNormal = def.vertexNormals[def.faceVertexIndices3[faceIdx]];
-					//}
 
 					tmp = (y * vertexNormal.y + z * vertexNormal.z + x * vertexNormal.x) / (var7 * vertexNormal.magnitude) + ambient;
 					litModel.field1823[faceIdx] = method2608(var15, tmp);
@@ -394,27 +357,15 @@ public class ItemSpriteFactory
 			}
 			else
 			{
-//				if(def.field1741 != null && def.field1741[def.faceVertexIndices1[faceIdx]] != null) {
-//					vertexNormal = def.field1741[def.faceVertexIndices1[faceIdx]];
-//				} else {
 				vertexNormal = def.vertexNormals[def.faceVertexIndices1[faceIdx]];
-				//}
 
 				tmp = (y * vertexNormal.y + z * vertexNormal.z + x * vertexNormal.x) / (var7 * vertexNormal.magnitude) + ambient;
 				litModel.field1856[faceIdx] = bound2to126(tmp);
-//				if(def.field1741 != null && def.field1741[def.faceVertexIndices2[faceIdx]] != null) {
-//					vertexNormal = def.field1741[def.faceVertexIndices2[faceIdx]];
-//				} else {
 				vertexNormal = def.vertexNormals[def.faceVertexIndices2[faceIdx]];
-				//}
 
 				tmp = (y * vertexNormal.y + z * vertexNormal.z + x * vertexNormal.x) / (var7 * vertexNormal.magnitude) + ambient;
 				litModel.field1854[faceIdx] = bound2to126(tmp);
-//				if(def.field1741 != null && def.field1741[def.faceVertexIndices3[faceIdx]] != null) {
-//					vertexNormal = def.field1741[def.faceVertexIndices3[faceIdx]];
-//				} else {
 				vertexNormal = def.vertexNormals[def.faceVertexIndices3[faceIdx]];
-				//	}
 
 				tmp = (y * vertexNormal.y + z * vertexNormal.z + x * vertexNormal.x) / (var7 * vertexNormal.magnitude) + ambient;
 				litModel.field1823[faceIdx] = bound2to126(tmp);

@@ -34,7 +34,7 @@ public class ItemSpriteFactoryTest
 			ItemManager itemManager = new ItemManager(store);
 			itemManager.load();
 
-			int itemID = 995;
+			int itemID = 4151;
 
 			ModelProvider modelProvider = new ModelProvider()
 			{

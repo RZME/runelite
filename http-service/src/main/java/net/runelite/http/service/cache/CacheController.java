@@ -45,6 +45,7 @@ import net.runelite.cache.definitions.loaders.NpcLoader;
 import net.runelite.cache.definitions.loaders.ObjectLoader;
 import net.runelite.cache.definitions.loaders.SpriteLoader;
 import net.runelite.cache.definitions.loaders.TextureLoader;
+import net.runelite.cache.definitions.providers.ItemProvider;
 import net.runelite.cache.definitions.providers.ModelProvider;
 import net.runelite.cache.definitions.providers.SpriteProvider;
 import net.runelite.cache.definitions.providers.TextureProvider2;
@@ -228,6 +229,22 @@ public class CacheController
 	) throws IOException
 	{
 		final CacheEntry cache = cacheService.findMostRecent();
+		ItemProvider itemProvider = new ItemProvider()
+		{
+			@Override
+			public ItemDefinition provide(int itemId)
+			{
+				try
+				{
+					return getItem(itemId);
+				}
+				catch (IOException ex)
+				{
+					log.warn(null, ex);
+					return null;
+				}
+			}
+		};
 		ModelProvider modelProvider = new ModelProvider()
 		{
 			@Override
@@ -254,7 +271,7 @@ public class CacheController
 				}
 				catch (Exception ex)
 				{
-					ex.printStackTrace();
+					log.warn(null, ex);
 					return null;
 				}
 			}
@@ -282,22 +299,14 @@ public class CacheController
 				}
 				catch (Exception ex)
 				{
-					ex.printStackTrace();
+					log.warn(null, ex);
 					return null;
 				}
-//				for (ArchiveEntry archiveEntry : cacheService.findArchivesForIndex(indexEntry)) {
-//
-//				}
 			}
 		};
 
-//		CacheStorage cacheStorage = new CacheStorage(cacheService);
-//		Store store = new Store(cacheStorage);
-//		store.load();
-
-		ItemDefinition item = getItem(itemId);
-
-		BufferedImage itemImage = ItemSpriteFactory.createSprite(modelProvider, spriteProvider, textureProvider2, item, 1, border, shadowColor, 0, false);
+		BufferedImage itemImage = ItemSpriteFactory.createSprite(itemProvider, modelProvider, spriteProvider, textureProvider2,
+			itemId, 1, border, shadowColor, 0, false);
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
 				ImageIO.write(itemImage, "png", bao);
 				return ResponseEntity.ok(bao.toByteArray());
