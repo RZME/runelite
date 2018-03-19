@@ -1,0 +1,56 @@
+.id                 279
+.int_stack_count    1
+.string_stack_count 0
+.int_var_count      1
+.string_var_count   2
+   load_string            ""
+   sstore                 0
+   load_string            ""
+   sstore                 1
+   invoke                 514
+   load_int               1
+   if_icmpeq              LABEL8
+   jump                   LABEL34
+LABEL8:
+   invoke                 280
+   sstore                 1
+   sload                  1
+   string_length         
+   load_int               0
+   if_icmpgt              LABEL15
+   jump                   LABEL34
+LABEL15:
+   iload                  0
+   load_int               -1
+   if_icmpne              LABEL19
+   jump                   LABEL23
+LABEL19:
+   iload                  0
+   get_item_name         
+   tolowercase           
+   sstore                 0
+LABEL23:
+   sload                  0
+   sload                  1
+   load_int               0
+   string_indexof_from   
+   load_int               -1
+   if_icmpne              LABEL30
+   jump                   LABEL32
+LABEL30:
+   load_int               1
+   return                
+LABEL32:
+   load_int               0                  ; load return value
+   iload                  0                  ; load item id
+   sload                  1                  ; load search string
+   load_string            "itemNameCompare"  ; push event name
+   runelite_callback                         ; invoke callback
+   pop_int                                   ; pop item name
+   pop_string                                ; pop search string
+   return                
+LABEL34:
+   load_int               1
+   return                
+   load_int               -1
+   return                
