@@ -28,11 +28,14 @@ package net.runelite.client.plugins.cluescrolls;
 
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Provides;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Stream;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -77,8 +80,9 @@ import net.runelite.client.plugins.cluescrolls.clues.NpcClueScroll;
 import net.runelite.client.plugins.cluescrolls.clues.ObjectClueScroll;
 import net.runelite.client.plugins.cluescrolls.clues.TextClueScroll;
 import net.runelite.client.ui.overlay.Overlay;
-import net.runelite.client.util.Text;
+import net.runelite.client.ui.overlay.worldmap.WorldMapPointManager;
 import net.runelite.client.util.QueryRunner;
+import net.runelite.client.util.Text;
 
 @PluginDescriptor(
 	name = "Clue Scroll"
@@ -87,6 +91,8 @@ import net.runelite.client.util.QueryRunner;
 public class ClueScrollPlugin extends Plugin
 {
 	private static final Duration WAIT_DURATION = Duration.ofMinutes(4);
+	public static final BufferedImage CLUE_SCROLL_IMAGE;
+	public static final BufferedImage MAP_ARROW;
 
 	@Getter
 	private ClueScroll clue;
@@ -125,13 +131,46 @@ public class ClueScrollPlugin extends Plugin
 	@Inject
 	private ClueScrollConfig config;
 
+	@Inject
+	private WorldMapPointManager worldMapPointManager;
+
+	private ClueScrollWorldMapPoint worldMapPoint;
+
 	private Integer clueItemId;
 	private boolean clueItemChanged = false;
+
+	static
+	{
+		try
+		{
+			synchronized (ImageIO.class)
+			{
+				CLUE_SCROLL_IMAGE = ImageIO.read(ClueScrollPlugin.class.getResourceAsStream("clue_scroll.png"));
+				MAP_ARROW = ImageIO.read(ClueScrollPlugin.class.getResourceAsStream("clue_arrow.png"));
+			}
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
 
 	@Provides
 	ClueScrollConfig getConfig(ConfigManager configManager)
 	{
 		return configManager.getConfig(ClueScrollConfig.class);
+	}
+
+	protected void startUp() throws Exception
+	{
+		worldMapPoint = new ClueScrollWorldMapPoint(this, client);
+		worldMapPointManager.add(worldMapPoint);
+	}
+
+	protected void shutDown() throws Exception
+	{
+		worldMapPointManager.remove(worldMapPoint);
+		worldMapPoint = null;
 	}
 
 	@Override
@@ -222,6 +261,8 @@ public class ClueScrollPlugin extends Plugin
 			{
 				client.setHintArrow(location);
 			}
+
+			worldMapPoint.setWorldPoint(location);
 		}
 
 		if (clue instanceof NpcClueScroll)
@@ -234,9 +275,14 @@ public class ClueScrollPlugin extends Plugin
 				npcsToMark = queryRunner.runQuery(query);
 
 				// Set hint arrow to first NPC found as there can only be 1 hint arrow
-				if (config.displayHintArrows() && npcsToMark.length >= 1)
+				if (npcsToMark.length >= 1)
 				{
-					client.setHintArrow(npcsToMark[0]);
+					if (config.displayHintArrows())
+					{
+						client.setHintArrow(npcsToMark[0]);
+					}
+
+					worldMapPoint.setWorldPoint(npcsToMark[0].getWorldLocation());
 				}
 			}
 		}
@@ -321,6 +367,8 @@ public class ClueScrollPlugin extends Plugin
 
 		clueItemChanged = false;
 		clue = null;
+
+		worldMapPoint.setWorldPoint(null);
 
 		if (config.displayHintArrows())
 		{
