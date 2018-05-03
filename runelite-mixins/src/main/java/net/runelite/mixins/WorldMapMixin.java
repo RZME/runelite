@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Adam <Adam@sigterm.info>
+ * Copyright (c) 2018, Morgan Lewis <https://github.com/MESLewis>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,21 +22,30 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.rs.api;
+package net.runelite.mixins;
 
-import net.runelite.api.WorldMapManager;
-import net.runelite.mapping.Import;
+import net.runelite.api.Point;
+import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.mixins.Inject;
+import net.runelite.api.mixins.Mixin;
+import net.runelite.rs.api.RSRenderOverview;
 
-public interface RSWorldMapManager extends WorldMapManager
+@Mixin(RSRenderOverview.class)
+public abstract class WorldMapMixin implements RSRenderOverview
 {
-	@Import("loaded")
 	@Override
-	boolean isLoaded();
+	@Inject
+	public Point getWorldMapPosition()
+	{
+		int worldX = getWorldMapX() + getWorldMapManager().getSurfaceOffsetX();
+		int worldY = getWorldMapY() + getWorldMapManager().getSurfaceOffsetY();
+		return new Point(worldX, worldY);
+	}
 
-	@Import("mapSurfaceBaseOffsetX")
-	int getSurfaceOffsetX();
-
-	@Import("mapSurfaceBaseOffsetY")
-	int getSurfaceOffsetY();
+	@Inject
+	public void setWorldMapPositionTarget(WorldPoint worldPoint)
+	{
+		setWorldMapPositionTarget(worldPoint.getX(), worldPoint.getY());
+	}
 
 }

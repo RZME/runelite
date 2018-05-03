@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Adam <Adam@sigterm.info>
+ * Copyright (c) 2018, Morgan Lewis <https://github.com/MESLewis>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,21 +22,54 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package net.runelite.rs.api;
+package net.runelite.client.ui.overlay.worldmap;
 
-import net.runelite.api.WorldMapManager;
-import net.runelite.mapping.Import;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import lombok.Data;
+import net.runelite.api.Point;
+import net.runelite.api.coords.WorldPoint;
 
-public interface RSWorldMapManager extends WorldMapManager
+@Data
+public class WorldMapPoint
 {
-	@Import("loaded")
-	@Override
-	boolean isLoaded();
+	private BufferedImage image;
 
-	@Import("mapSurfaceBaseOffsetX")
-	int getSurfaceOffsetX();
+	private WorldPoint worldPoint;
 
-	@Import("mapSurfaceBaseOffsetY")
-	int getSurfaceOffsetY();
+	/**
+	 * The point on the image that will be drawn at WorldPoint
+	 * WorldMapPointManager will center the image if imagePoint is null
+	 */
+	private Point imagePoint = null;
 
+	private Rectangle clickbox = null;
+
+	private boolean snapToEdge = false;
+
+	private boolean currentlyEdgeSnapped = false;
+
+	private boolean tooltipVisible = false;
+
+	private String tooltip = null;
+
+	public WorldMapPoint(WorldPoint worldPoint, BufferedImage image)
+	{
+		this.worldPoint = worldPoint;
+		this.image = image;
+	}
+
+	public MouseEvent onClick(MouseEvent e)
+	{
+		return e;
+	}
+
+	public void onEdgeSnap()
+	{
+	}
+
+	public void onEdgeUnsnap()
+	{
+	}
 }
