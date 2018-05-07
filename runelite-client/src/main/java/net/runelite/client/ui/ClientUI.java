@@ -651,8 +651,10 @@ public class ClientUI
 			toggleSidebar();
 		}
 
+		int expandBy = panel.getWrappedPanel().getPreferredSize().width;
 		if (pluginPanel != null)
 		{
+			expandBy = pluginPanel.getWrappedPanel().getPreferredSize().width - expandBy;
 			navContainer.remove(0);
 		}
 
@@ -668,7 +670,14 @@ public class ClientUI
 		giveClientFocus();
 		panel.onActivate();
 		wrappedPanel.repaint();
-		expandFrameBy(pluginPanel.getWrappedPanel().getPreferredSize().width);
+		if (expandBy > 0)
+		{
+			expandFrameBy(expandBy);
+		}
+		else if (expandBy < 0)
+		{
+			contractFrameBy(expandBy);
+		}
 	}
 
 	private void contract()
