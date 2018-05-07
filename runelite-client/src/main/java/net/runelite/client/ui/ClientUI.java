@@ -346,14 +346,6 @@ public class ClientUI
 			SwingUtil.addGracefulExitCallback(frame,
 				() ->
 				{
-					// Update window bounds to save position with
-					if (sidebarOpen)
-					{
-						toggleSidebar();
-					}
-
-					contract();
-
 					saveClientBoundsConfig();
 					runelite.shutdown();
 				},
@@ -810,8 +802,19 @@ public class ClientUI
 		}
 		else
 		{
+			Rectangle bounds = frame.getBounds();
+			if (sidebarOpen)
+			{
+				// remove sidebar width
+				bounds.width -= pluginToolbar.getWidth();
+			}
+			if (pluginPanel != null)
+			{
+				// remove expanded panel width from bounds
+				bounds.width -= pluginPanel.getWrappedPanel().getPreferredSize().width;
+			}
 			configManager.unsetConfiguration(CONFIG_GROUP, CONFIG_CLIENT_MAXIMIZED);
-			configManager.setConfiguration(CONFIG_GROUP, CONFIG_CLIENT_BOUNDS, frame.getBounds());
+			configManager.setConfiguration(CONFIG_GROUP, CONFIG_CLIENT_BOUNDS, bounds);
 		}
 	}
 }
